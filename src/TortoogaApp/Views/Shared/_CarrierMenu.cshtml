@@ -1,0 +1,58 @@
+<div class="clearfix">
+    ﻿<div class="">
+        @*<div class="list-group">
+                <h5 class="list-group-item">
+                    Carrier
+                </h5>
+                <a asp-controller="Listing" asp-action="Index" class="list-group-item">
+                    <i class="fa fa-bar-chart-o"></i> Manage Listings
+                </a>
+                <a asp-controller="Bookings" class="list-group-item">
+                    <i class="fa fa-folder-open-o"></i> Manage Bookings
+                </a>
+                <a asp-controller="Carrier" class="list-group-item">
+                    <i class="fa fa-user"></i> Company Profile
+                </a>
+            </div>*@
+        <div class="panel-group sidebar-panel">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="panel-title list-group-item">
+                        <strong>Carrier</strong>
+                    </div>
+                    <div class="panel-title list-group-item" data-toggle="collapse" data-target="#collapse1">
+                        <i class="fa fa-bar-chart-o"></i> Manage Listings
+                        <i class="fa fa-chevron-right fa-pull-right js-toggle-chevron" aria-hidden="true"></i>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a asp-controller="Listing" asp-action="Index">All Listings</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-title list-group-item" data-toggle="collapse" data-target="#collapse2" id="divManageBookingsCount">
+                        <i class="fa fa-folder-open-o"></i> Manage Bookings
+                        @*<span class="badge pull-right">1</span>*@
+                        <i class="fa fa-chevron-right fa-pull-right js-toggle-chevron" aria-hidden="true"></i>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li id="li_CarrierAdmin_Pending" class="list-group-item"><a asp-controller="Booking" asp-action="ManageBookings" asp-route-status="pending">Pending</a></li>
+                        </ul>
+                        <ul class="list-group">
+                            <li id="li_CarrierAdmin_Processing" class="list-group-item"><a asp-controller="Booking" asp-action="ManageBookings" asp-route-status="processing">Processing</a></li>
+                        </ul>
+                        <ul class="list-group">
+                            <li id="li_CarrierAdmin_Shipped" class="list-group-item"><a asp-controller="Booking" asp-action="ManageBookings" asp-route-status="shipped">Shipped</a></li>
+                        </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item"><a asp-controller="Booking" asp-action="ManageBookings">All</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-title list-group-item">
+                        <a asp-controller="Carrier" asp-action="Index"><i class="fa fa-user"></i> Company Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

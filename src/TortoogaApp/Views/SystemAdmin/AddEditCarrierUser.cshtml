@@ -1,0 +1,121 @@
+@model TortoogaApp.ViewModels.SystemAdminViewModels.AddEditCarrierUserViewModel
+
+@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "User Profile";
+    var Mode = ViewBag.Mode;
+    string defultURI = "/images/DefaultUser.jpg";
+    string path = string.IsNullOrEmpty(Model.ImageUrl) ? defultURI : Model.ImageUrl;
+}
+
+
+
+<!DOCTYPE html>
+
+<div class="container">
+    <div class="box-with-border">
+        <div class="row">                        
+            <div class="col-md-6">
+                <form asp-action="AddEditCarrierUser" id="userProfileform" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                    <div class="form-horizontal col-md-12">
+                        <h4>@ViewData["Title"] </h4>
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" id="hdnUserId" asp-for="UserID" />
+                        <input type="hidden" id="hdnStatus" asp-for="isDisabled" />
+                        @if (Mode == "Edit")
+                        {
+                            <div class="form-group">
+                                <input type="hidden" asp-for="CarrierGuid" />
+                                <label asp-for="CarrierGuid" class="col-md-3"></label>
+                                <div class="col-md-7">
+                                    <select id="ddlCarrier" asp-for="CarrierGuid" asp-items="@Model.Carriers" class="form-control" disabled="disabled"></select>
+                                    <span asp-validation-for="CarrierGuid" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label asp-for="Email" class="col-md-3"></label>
+                                    <div class="col-md-7">
+                                        @Model.Email
+                                    </div>
+                                </div>
+                            </div>                            
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label asp-for="CarrierGuid" class="col-md-3"></label>
+                                <div class="col-md-7">
+                                    <select id="ddlCarrier" asp-for="CarrierGuid" asp-items="@Model.Carriers" class="form-control">
+                                        <option value='0' selected>---Select---</option>
+                                    </select>
+                                    <span asp-validation-for="CarrierGuid" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label asp-for="Email" class="col-md-3"></label>
+                                    <div class="col-md-7">
+                                        <input asp-for="Email" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>                            
+                        }
+                        @Html.EditorForModel()
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="row">
+                    <div class="pull-right form-inline">
+                        <label>
+                            <input type="checkbox" id="toggleStatus" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
+                        </label>
+                        
+                        @*<input type="button" id="btnDisableUser" class="btn btn-sm btn-default btn-primary" value="Disable User" />*@  
+                        <input type="button" class="btn btn-sm btn-default btn-primary" value="Reset Password" />                       
+                    </div>
+                    
+                    <div class="clearfix  profile-img-block">
+                        <div class="col-sm-12 col-md-6">
+                            <label>Profile Picture</label>
+                            @*<img src="~/images/DefaultUser.jpg" class="img-thumbnail" />*@
+                            <img src=@path class="img-thumbnail" />
+
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-sm-12">
+
+                            <form asp-action="Upload" asp-controller="SystemAdmin" asp-route-userId="@Model.UserID" class="dropzone" method="post" id="ProfilePic" enctype="multipart/form-data" role="form"></form>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="button" id="btnDeleteUser" class="btn btn-sm btn-danger pull-right" value="Delete User" />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>  
+    <script type="text/javascript" src="~/lib/dropzone/dist/dropzone.js"></script>
+    <link type="text/css" rel="stylesheet" href="~/lib/dropzone/dist/dropzone.css" />  
+    <script src="~/js/SystemAdmin/AddEditCarrierUser.js"></script>
+    @*<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
+@*<script src="~/lib/bootstrap-toggle/js/bootstrap2-toggle.js"></script>
+<link href="~/lib/bootstrap-toggle/css/bootstrap2-toggle.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet" />*@
+<script src="~/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<link href="~/lib/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet" />
+}

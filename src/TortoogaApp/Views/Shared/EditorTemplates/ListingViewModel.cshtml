@@ -1,0 +1,103 @@
+﻿@model TortoogaApp.ViewModels.ListingViewModels.ListingViewModel
+
+<input type="hidden" asp-for="@Model.ListingGuid"/>
+<fieldset>
+    <legend>Upload Image</legend>
+    <div class="form-group row">
+        <div class="container">
+            <div class="dropzone-previews"></div>
+            <div class="dz-default dz-message">
+                <div>Drop files here to upload</div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Listing Info</legend>
+    <div class="form-group row form-inline">
+        <label asp-for="Title" class="col-md-3 control-label"></label>
+        <input value="@Model.Title" asp-for="Title" placeholder="Your title here" class="form-control" />
+        <span asp-validation-for="Title" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Description" class="col-md-3 control-label"></label>
+        <textarea value="@Model.Description" asp-for="Description" placeholder="Your Listing Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Length" class="col-md-3 control-label"></label>
+        <input value="@Model.Length" type="number" class="form-control" asp-for="Length" placeholder="ft." onfocus="(this.type='number')" />
+        <span asp-validation-for="Length" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Width" class="col-md-3 control-label"></label>
+        <input value="@Model.Width" type="number" class="form-control" asp-for="Width" placeholder="ft." onfocus="(this.type='number')"/>
+        <span asp-validation-for="Width" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Height" class="col-md-3 control-label"></label>
+        <input value="@Model.Height" type="number" class="form-control" asp-for="Height" placeholder="ft." onfocus="(this.type='number')"/>
+        <span asp-validation-for="Height" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Price" class="col-md-3 control-label"></label>
+        <input value="@Model.Price" class="form-control" asp-for="Price" type="number" placeholder="$ per square feet" />
+        <span asp-validation-for="Price" class="text-muted"></span>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Shipping</legend>
+    <div class="form-group row form-inline">
+        <label asp-for="Origin" class="col-md-3 control-label"></label>
+        <input value="@Model.Origin" asp-for="Origin" placeholder="Departure Port" class="form-control" />
+        <span asp-validation-for="Origin" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="DepartureDate" class="col-md-3 control-label"></label>
+        <input value="@Model.DepartureDate?.ToString("yyyy-MM-dd")" asp-for="DepartureDate" placeholder="YYYY-MM-DD" onfocus="(this.type='date')" class="form-control" />
+        <span asp-validation-for="DepartureDate" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="Destination" class="col-md-3 control-label"></label>
+        <input value="@Model.Destination" asp-for="Destination" placeholder="Arrival Port" class="form-control" />
+        <span asp-validation-for="Destination" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="EstimatedArrivalDate" class="col-md-3 control-label"></label>
+        <input value="@Model.EstimatedArrivalDate?.ToString("yyyy-MM-dd")" asp-for="EstimatedArrivalDate" placeholder="YYYY-MM-DD" onfocus="(this.type='date')" class="form-control" />
+        <span asp-validation-for="EstimatedArrivalDate" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="TransitStops" class="col-md-3 control-label"></label>
+        <input value="@Model.TransitStops" asp-for="TransitStops" placeholder="At least 1" class="form-control" />
+        <span asp-validation-for="TransitStops" class="text-muted"></span>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Shipment Collection</legend>
+    <div class="form-group row form-inline">
+        <label asp-for="DropOffAddress" class="col-md-3 control-label"></label>
+        <input value="@Model.DropOffAddress" asp-for="DropOffAddress" placeholder="Street, City, State, PostCode, Country" class="form-control" />
+        <span asp-validation-for="DropOffAddress" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="PickUpAddress" class="col-md-3 control-label"></label>
+        <input value="@Model.PickUpAddress" asp-for="PickUpAddress" placeholder="Street, City, State, PostCode, Country" class="form-control" />
+        <span asp-validation-for="PickUpAddress" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="AppraisalDate" class="col-md-3 control-label"></label>
+        <input value="@Model.AppraisalDate?.ToString("yyyy-MM-dd")" asp-for="AppraisalDate" onfocus="(this.type='date')" placeholder="YYYY-MM-DD" class="form-control" />
+        <span asp-validation-for="AppraisalDate" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="AppraisalTime" class="col-md-3 control-label"></label>
+        <input value="@Model.AppraisalTime?.ToString("HH:mm")" asp- asp-for="AppraisalTime" type="time" class="form-control" />
+        <span asp-validation-for="AppraisalTime" class="text-muted"></span>
+    </div>
+    <div class="form-group row form-inline">
+        <label asp-for="ContactDetails" class="col-md-3 control-label"></label>
+        <input value="@Model.ContactDetails" asp-for="ContactDetails" placeholder="Email or Phone Number" class="form-control" />
+        <span asp-validation-for="ContactDetails" class="text-muted"></span>
+    </div>
+</fieldset>

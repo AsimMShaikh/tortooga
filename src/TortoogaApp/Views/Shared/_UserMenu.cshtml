@@ -1,0 +1,55 @@
+
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<Role> RoleManager
+
+@using TortoogaApp.Security
+
+<div class="clearfix">
+    <div class="panel-group sidebar-panel">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title list-group-item">
+                    <strong>User</strong>
+                </div>
+                <div class="panel-title list-group-item">
+                    <a asp-controller="Booking" asp-action="UserBookings"><i class="fa fa-folder-open-o"></i> Your Bookings</a>
+                    @*<i class="fa fa-chevron-right fa-pull-right js-toggle-chevron" aria-hidden="true"></i>*@
+                </div>
+                <div class="panel-title list-group-item">
+                    <a asp-controller="UserProfile" asp-action="Index"><i class="fa fa-user"></i> Your Profile</a>
+                </div>
+                <div class="panel-title list-group-item" data-toggle="collapse" data-target="#RatingsCollapse">
+                    <ul class="list-group">
+                        @*<a asp-controller="Ratings" asp-action="Index"><i class="fa fa-user"></i> Your Feedback Ratings</a>*@
+                        <i class="fa fa-folder-open-o"></i> Your Feedback Ratings
+                        <i class="fa fa-chevron-right fa-pull-right js-toggle-chevron" aria-hidden="true"></i>
+                    </ul>
+                </div>
+                @*For Carrier admin*@
+                @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), RoleType.CARRIER_ADMIN)) 
+                {
+                    <div id="RatingsCollapse" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item clearfix"><a asp-controller="Ratings" asp-action="RatingsReceived">Rated By You </a></li>
+                        </ul>
+                        <ul class="list-group">
+                            <li id="li_carrierAdmin_ratingsReceived" class="list-group-item"><a asp-controller="Ratings" asp-action="Index" asp-Route-From="Page">Ratings Received </a></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div id="RatingsCollapse" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a asp-controller="Ratings" asp-action="Index">Rated By You</a></li>
+                        </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item" id="li_user_ratingsReceived"><a asp-controller="Ratings" asp-action="RatingsReceived" asp-Route-From="Page">Ratings Received</a></li>
+                        </ul>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

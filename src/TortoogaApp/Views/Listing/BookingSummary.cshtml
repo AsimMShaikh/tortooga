@@ -1,0 +1,27 @@
+﻿@model TortoogaApp.ViewModels.ListingViewModels.BookingSummaryViewModel
+
+@{
+    ViewBag.Title = "Booking Summary";
+}
+
+<div class="col-md-12">
+    <div class="container">
+     <h2>Booking Summary</h2>
+        <hr />
+        <h3>
+            Thank you for booking with Tortooga.
+        </h3>
+        <br />
+        <div>
+            <strong>@Model.Origin</strong> to <strong>@Model.Destination</strong><br />
+            Departing on <strong>@Model.DepartureDate.ToString("MM/dd/yyyy")</strong>
+            <br />
+            Your booking reference is: <strong>@Model.ReferenceNumber</strong>
+        </div>
+        <br />
+        <div>
+            Your booking is currently awaiting approval from @Model.BusinessName and you will receive via email notification once approved.
+            An email with the booking details have sent to @Model.UserEmail for your reference.
+        </div>
+    </div>
+</div>

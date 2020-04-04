@@ -1,0 +1,24 @@
+@{
+    Layout = "_SiteLayout";
+}
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<Role> RoleManager
+
+@using TortoogaApp.Security
+
+@*<div class="col-xs-12 col-sm-12 col-md-3">
+    @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), RoleType.CARRIER_ADMIN))
+    {
+        @await Html.PartialAsync("_CarrierMenu")
+    }
+
+    @await Html.PartialAsync("_UserMenu")
+</div>*@
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+    @RenderBody()
+</div>
+
+@section Scripts{
+    @RenderSection("Scripts", required: false)
+}

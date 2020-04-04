@@ -1,0 +1,546 @@
+﻿body {
+    /*padding-top: 100px;*/
+    padding-bottom: 20px;
+    background-color: whitesmoke;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+table {
+    width: 100%;
+}
+
+    table tbody tr > td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+.mb15 {
+    margin-bottom: 15px;
+}
+.mb0 {
+    margin-bottom:0 !important;
+}
+.mt0 {
+    margin-top:0 !important;
+}
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.container {
+    width: auto;
+}
+
+.top-pad-1 {
+    padding-top: 10px;
+}
+
+/* Set widths on the form inputs since otherwise they're 100% wide */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+/* Carousel */
+.carousel {
+    max-height: 500px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* buttons and links extension to use brackets: [ click me ] */
+.btn-bracketed::before {
+    display: inline-block;
+    content: "[";
+    padding-right: 0.5em;
+}
+
+.btn-bracketed::after {
+    display: inline-block;
+    content: "]";
+    padding-left: 0.5em;
+}
+
+#information {
+    padding-top: 10px;
+}
+
+#details {
+    padding-top: 10px;
+}
+
+/*START SEARCH RESULT*/
+div .search-result {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 2px dotted #ccc;
+}
+
+    div .search-result ul, div .search-result li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+/*END SEARCH RESULT*/
+/*Standardize the input size for all*/
+/*.form-inline .form-control {
+    width: 100%;
+}*/
+/*Sidebar style*/
+.sidebar-panel a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.sidebar-panel .panel {
+    border: 0;
+}
+
+.sidebar-panel .panel-heading {
+    padding: 0;
+}
+
+.sidebar-panel .list-group {
+    margin-bottom: 0;
+}
+
+    .sidebar-panel .list-group .list-group-item {
+        margin-bottom: 0;
+    }
+
+
+
+
+/*TODO: Figure how to get bootstrap.ess through grunt so we can use it in our site.less, perhaps assign full widht or half width classes to dashboard block*/
+/*Dashboard style*/
+.font-16 {
+    font-size: 16px;
+}
+
+.mt0 {
+    margin-top: 0;
+}
+.mb0 {
+    margin-bottom: 0px !important;
+}
+.mb5 {
+    margin-bottom: 5px;
+}
+
+.mb7 {
+    margin-bottom: 7px;
+}
+
+.mb9 {
+    margin-bottom: 9px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+.strikeout {
+text-decoration: line-through;
+}
+.mt27{
+    margin-top: 27px;
+}
+
+.unread-notification {
+    background: #4480e8;
+    color: #fff !important;
+}
+
+    .unread-notification:hover {
+        background: #4480e8;
+        color: #555555 !important;
+    }
+
+    .unread-notification td {
+        font-weight: bold;
+        color: #000;
+    }
+
+
+.badge-warning {
+    background: #c70909;
+    color: #fff;
+}
+
+.mb20 {
+    margin-bottom:20px;
+}
+.mr5 {
+    margin-right:5px;
+}
+.table tr td .btn {
+    margin-right:5px;
+}
+.box-with-border {
+    background:#fff;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+.dashboard .dashboard-block {
+    overflow-y: auto;
+}
+
+    .dashboard .dashboard-block .panel-body {
+        height: 280px;
+    }
+
+        .dashboard .dashboard-block .panel-body.with-footer {
+            height: 220px;
+        }
+
+    .dashboard .dashboard-block .panel-heading {
+        margin-bottom: 10px;
+        background-color: #ccc;
+    }
+
+        .dashboard .dashboard-block .panel-heading .btn-group a {
+            color: grey;
+            font-size: smaller;
+        }
+
+height: 350px; overflow-y: auto;
+}
+
+.dashboard .dashboard-block .panel-heading {
+    margin-bottom: 10px;
+    background-color: #ccc;
+}
+
+    .dashboard .dashboard-block .panel-heading .btn-group a {
+        color: grey;
+        font-size: smaller;
+    }
+
+    .dashboard .dashboard-block .panel-heading .panel-title {
+        font-size: larger;
+    }
+
+.dashboard .dashboard-block .view-all {
+    position: absolute;
+    margin-bottom: 0;
+}
+
+.dashboard .dashboard-block table, .dashboard .dashboard-block .btn {
+    font-size: smaller;
+}
+
+.profile-img-block {
+    margin-top: 60px;
+}
+
+    .profile-img-block img {
+        width: 200px !important;
+        height: 200px !important;
+        margin-bottom: 20px;
+    }
+
+.txt-upload {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    color: #000;
+    font-weight: 300;
+    display: block;
+}
+
+.ship-location {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .ship-location li {
+        float: left;
+        width: 20%;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+
+.review-block-bottom {
+    /*width: 80%;
+    margin: 0 auto;*/
+    border-bottom: 2px solid #333;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+
+.divCompanyBio {
+    font-size: 20px;
+}
+
+.minheight150 {
+    min-height: 150px;
+}
+
+.company-bio .inner-part {
+    background: #fff;
+    padding: 15px 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin-bottom: 22px;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.verified-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .verified-info li {
+        margin-bottom: 10px;
+    }
+
+        .verified-info li label {
+            font-weight: bold;
+            float: left;
+            min-width: 120px;
+        }
+
+        .verified-info li div {
+            display: block;
+            float: left;
+            line-height: 22px;
+            width: calc(100% - 150px);
+        }
+
+        .verified-info li span {
+            display: block;
+            line-height: 28px;
+        }
+
+        .verified-info li .fa {
+            font-size: 25px;
+            line-height: 28px;
+            color: green;
+        }
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.reviwer-listing ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.reviwer-listing li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+    .reviwer-listing li + li {
+        border-top: 2px dotted #ddd;
+        padding-top: 10px;
+    }
+
+    .reviwer-listing li .img-block {
+        max-height: 130px;
+        /*width: 80px;
+        
+        margin-right: 10px;*/
+    }
+
+        .reviwer-listing li .img-block img {
+            max-height: 130px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+    .reviwer-listing li .content-block {
+        /*width: calc(100% - 90px);*/
+    }
+
+        .reviwer-listing li .content-block label {
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+.ratings-block .form-group {
+    margin-bottom: 0;
+}
+
+.ratings-block .glyphicon {
+    font-size: 20px;
+}
+
+.star-rating-block {
+    margin-top: 0px;
+    position: relative;
+}
+
+.glyphicon-star {
+    color: #FDD003;
+}
+
+.grid-fav {
+    position: absolute;
+    left: -1px;
+    top: -2px;
+    width: 100%;
+    height: 27px;
+    z-index: 5;
+}
+
+.dataTables_wrapper {
+    overflow-x: auto;
+    min-height: 0.01%;
+}
+
+#tblYourRatingsList th, #tblYourRatingsList td {
+    white-space: nowrap;
+}
+
+table.dataTable tbody td {
+    padding: 8px 5px !important;
+}
+
+table.dataTable td .star-rating-block {
+    text-align: center;
+}
+
+    table.dataTable td .star-rating-block .glyphicon {
+        font-size: 16px !important;
+    }
+
+        table.dataTable td .star-rating-block .glyphicon.glyphicon-star-empty {
+            display: none;
+        }
+
+.pendingratingsdiv table {
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 13px 1px rgba(0,0,0,0.5);
+}
+
+    .pendingratingsdiv table td {
+        padding-top: 15px !important;
+        padding-bottom: 10px;
+    }
+
+    .pendingratingsdiv table tr + tr {
+        border-top: 2px dotted #333;
+    }
+
+.removeth thead {
+    display: none;
+}
+
+    .removeth thead th {
+        display: none;
+    }
+
+.max-height280 {
+    max-height: 280px;
+}
+
+.custom-scroll {
+    overflow: auto;
+}
+
+#tblUserRatingsList th {
+    display: none;
+}
+
+.mytooltip {
+    display: inline;
+    position: relative;
+    z-index: 1;
+}
+
+.box-with-border {
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+/*--START SIDEBAR--*/
+@media screen and (min-width: 768px) {
+    .sidebar-nav .input-group {
+        width: 100%;
+    }
+
+    .sidebar-nav .cost-slider {
+        width: 100%;
+        float: left;
+    }
+
+    .sidebar-nav .form-group {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    .sidebar-nav .navbar .navbar-collapse {
+        padding: 0;
+        max-height: none;
+    }
+
+    .sidebar-nav .navbar ul {
+        float: none;
+    }
+
+        .sidebar-nav .navbar ul li {
+            float: none;
+            display: block;
+        }
+
+            .sidebar-nav .navbar ul li a {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+    /*.sidebar-nav .navbar ul :not() {
+        display: block;
+    }*/
+}
+
+/*--END SIDEBAR--*/
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}

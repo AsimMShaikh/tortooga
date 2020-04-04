@@ -1,0 +1,197 @@
+﻿@model TortoogaApp.ViewModels.ListingViewModels.DetailListingViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{    
+    ViewBag.Title = $"{Model.Origin} - {Model.Destination} Shipping";
+    //HACK: hardcode booking fee first
+    ViewBag.BookingFee = 5.00m;
+    ViewBag.TotalPrice = Model.Price + ViewBag.BookingFee;
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/Ratings/startrating.js"></script>
+
+    <script type="text/javascript">
+        $().ready(function () {
+            var requiredHeight = $("#@Html.IdFor(v => v.Height)");
+            var requiredWidth = $("#@Html.IdFor(v => v.Width)");
+            var requiredLength = $("#@Html.IdFor(v => v.Length)");
+            var signedIn = @Html.Encode(SignInManager.IsSignedIn(User).ToString().ToLower());
+            var availableSpace = $("#availableSpace");
+            var validationRow = $("#validationRow");
+            var validationMessage = $("#validationMessage");
+            var requiredSpace = $("#requiredSpace");
+            var termsAndConditionChk = $("#termsAndConditions");
+            var bookListingBtn = $("#bookListing");
+            var squareFeet = 0;
+
+            validationRow.hide();
+            checkValidSpaceBooked();
+            requiredWidth.on('change', checkValidSpaceBooked);
+            requiredLength.on('change', checkValidSpaceBooked);
+
+            function checkValidSpaceBooked() {
+                validationRow.hide();
+                squareFeet = requiredWidth.val() * requiredLength.val();
+                requiredSpace.text(squareFeet);
+                if (squareFeet > availableSpace.text())
+                {
+                    requiredSpace.addClass("text-danger")
+                    validationRow.show();
+                    validationMessage.text("Can't book more than available space");
+                    return false;
+                }
+
+                if(squareFeet <= 0)
+                {
+                    requiredSpace.addClass("text-danger")
+                    validationRow.show();
+                    validationMessage.text("Book space can't be less than 0 sq ft");
+                    return false;
+                }
+
+                requiredSpace.removeClass("text-danger");
+                return true;
+            }
+
+            bookListingBtn.on('click', function () {
+                validationRow.hide();
+                if (termsAndConditionChk.prop('checked') == false) {
+                    validationRow.show();
+                    validationMessage.text("Please agree to terms and conditions");
+                    return false;
+                }
+
+                if (!checkValidSpaceBooked())
+                    return false;
+
+                if(signedIn == false)
+                {
+                    $('#loginModal').modal({backdrop: 'static', keyboard: false});
+                    return false;
+                }
+            });
+
+        });
+    </script>
+}
+
+<div class="col-md-12">
+    <div class="container-fluid">
+        <section id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active" width="1903" height="500">
+                    <img width="1903" height="500" src="~/images/listing_images/mocklisting/container_img1.png" class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                    </div>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </section>
+
+        <section id="details">
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">  
+                       
+                            <div>
+                                <h3>@Model.CarrierName</h3>
+                            </div>
+                        <a target="_blank" asp-action="ViewBio" asp-controller="Carrier" asp-route-id="@Model.CarrierGuid">
+                            @*<strong>Asdf</strong>&nbsp;*@
+                            @* TODO: Implement rating system *@
+                            @*<i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                            &nbsp;<span>(73)</span>*@
+
+                            <div class="clearfix">
+                                <div class="star-block pull-left mr10">
+                                    <div class="pull-left mr10 mt10">
+                                        <div class="star-rating-block">
+                                            <div id="stars" class="starrr" data-rating=@Model.CarrierRatings></div>
+                                            <div class="grid-fav"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pull-left"><h4>@Model.CarrierRatings out 5 (@Model.TotalNumberOfRatings reviews)</h4></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+                                <i class="fa fa-fw fa-plane fa-4x" alt="DeparturePort"></i><br />
+                                <span>@Model.Origin</span>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+                                <i class="fa fa-fw fa-plane fa-rotate-90 fa-4x" alt="DestinationPort"></i><br />
+                                <span>@Model.Destination</span>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+                                <i class="fa fa-fw fa-arrows-alt fa-4x" alt="AvailableSpace"></i><br />
+                                <span>@Model.SquareFeet <i>sq. ft</i></span>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+                                <i class="fa fa-fw fa-anchor fa-4x" aria-hidden="true" alt="TransitStops"></i><br />
+                                <span>@Model.TransitStops</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <h3>@Model.Title</h3>
+                        <p>@Html.DisplayFor(v => v.Description)</p>
+                        <hr />
+                        <h4>Container Information</h4>
+                        <strong>Total Space:</strong> @Model.Height H x @Model.Length L x @Model.Width W <i>ft</i> available<br />
+                        <strong>Vessel Number:</strong> 123456<br />
+                        <strong>Departure Port:</strong> @Model.Origin<br />
+                        <strong>Destination Port:</strong> @Model.Destination<br />
+                        <strong>Transit Stops:</strong> @Model.TransitStops<br />
+                        <hr />
+                        <h4>Drop Off & Pick Up</h4>
+                        <strong>Drop Off Address:</strong> @Model.DropOffAddress<br />
+                        <strong>Drop Off Date:</strong> @Model.AppraisalDateTime.ToString("yyyy-MM-dd")<br />
+                        <strong>Drop Off Time:</strong> @Model.AppraisalDateTime.ToString("HH:mm")<br /><br />
+
+                        <strong>Pick Up Address:</strong> @Model.PickUpAddress<br />
+
+                        <hr />
+                        <h4>Cargo Restrictions</h4>
+                        <ul>
+                            @* TODO: Perhaps you take this from some where from the carrier notes *@
+                            <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            <li>Aliquam tincidunt mauris eu risus.</li>
+                            <li>Vestibulum auctor dapibus neque.</li>
+                            <li>Nunc dignissim risus id metus.</li>
+                            <li>Cras ornare tristique elit.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @* Only show the booking panel if is still available *@
+        @if (Model.Status == TortoogaApp.Models.ListingStatus.Active)
+        {
+            await Html.RenderPartialAsync("_BookNow", Model);
+        }
+    </div>
+</div>
+
+@await Component.InvokeAsync("LoginModal")

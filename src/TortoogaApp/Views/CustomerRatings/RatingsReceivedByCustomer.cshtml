@@ -1,0 +1,75 @@
+@model TortoogaApp.ViewModels.RatingViewModels.CustomerRatingsViewModel
+
+@{
+    ViewData["Title"] = "RatingsReceivedByCustomer";
+    Layout = "_MainLayout";
+    var ApplicationBaseURL = ViewBag.AppUrl;
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+
+<h2>Your Received Ratings</h2>
+<br />
+<div class="container-fluid">
+    <div class="row" style="background-color:white;">
+        <div class="col-xs-12 col-sm-12 col-md-2 text-center" style="padding-top:40px;">
+            @if (string.IsNullOrEmpty(Model.UserProfileImagePath))
+            {
+                <img src="~/images/defaultusergrid.jpg" />
+            }
+            else
+            {
+                <img src="@Model.UserProfileImagePath" style="width:100%;" />
+            }
+            <div class="clearfix"></div>
+            <label class="control-label">@Model.UserName</label>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-5" style="padding-top:40px;">
+            <div class="row">
+                <label class="col-md-5 control-label">Name</label>
+                <div class="col-md-7">
+                    @Model.FullName
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-5 control-label">Email</label>
+                <div class="col-md-7">
+                    @Model.Email  
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-5 control-label">Mobile Number</label>
+                <div class="col-md-7">
+                    @Model.MobileNumber  
+                </div>
+            </div>            
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-5" style="padding-top:40px;">
+            <div class="row">
+                <label class="col-md-5 control-label">Your Average Ratings (@Model.Count):</label>
+                <div class="col-md-3">
+                    <div class="star-rating-block">
+                        <div id="star-Overall" class="starrr" data-rating=@Model.Average></div>
+                        <div class="grid-fav"></div>
+
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div>
+        <h4>Received Ratings</h4>
+        <hr />
+        @Html.Partial("~/Views/CustomerRatings/_ReceivedRatings.cshtml")
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Ratings/startrating.js"></script>
+    <script src="~/js/Ratings/CustomerReceivedRatings.js"></script>
+}

@@ -1,0 +1,81 @@
+﻿@model  TortoogaApp.ViewModels.ListingViewModels.IndexListingViewModel
+
+@{
+    Layout = "_MainLayout";
+    ViewBag.Title = "Your Listings";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <h5>Manage Listings</h5>
+                <span>Total <i>@Model.Listings.Count()</i> listings</span>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <a target="_blank" asp-action="Add" class="btn btn-default" asp-controller="Listing"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add New Listing</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                @foreach (var listing in Model.Listings)
+                {
+                    <div class="search-result row">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <a asp-controller="Listing" asp-action="View" asp-route-id="@listing.ListingGuid" title="Lorem ipsum" class="thumbnail"><img src="~/images/listing_images/mocklisting/container_img1.png" alt="Lorem ipsum" /></a>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2">
+                                <ul class="meta-search">
+                                    <li><i class="fa fa fa-fw fa-plane"></i> <span>@listing.Origin</span></li>
+                                    <li><i class="fa fa fa-fw fa-calendar"></i> <span>@listing.DepartureDate.ToString("yyyy-MM-dd")</span></li>
+                                    &nbsp;
+                                    <li><i class="fa fa fa-fw fa-plane fa-rotate-90"></i> <span>@listing.Destination</span></li>
+                                    <li><i class="fa fa fa-fw fa-calendar"></i> <span>@listing.EstimatedArrivalDate.ToString("yyyy-MM-dd")</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-5">
+                                <div class="row"><a asp-controller="Listing" asp-action="View" asp-route-id="@listing.ListingGuid"><h5>@listing.Title</h5></a></div>
+                                <div class="row">
+                                    <p>@(listing.Description.Length >= 160 ? listing.Description.Substring(0, 159) + "..." : listing.Description)</p>
+                                </div>
+                                <div class="row"><strong>@listing.Height</strong>H x <strong>@listing.Length</strong>L x <strong>@listing.Width</strong>W <i>ft</i> available</div>
+                                <div class="row top-pad-1">
+                                    Reference: <strong>@listing.ReferenceNumber</strong>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2 text-center">
+                                <div class="row">
+                                    <h3><i class="fa fa fa-fw fa-dollar"></i><span>@listing.Price</span></h3>
+                                </div>
+                                <div class="row">
+                                    @{
+                                        switch (listing.Status)
+                                        {
+                                            case TortoogaApp.Models.ListingStatus.Active:
+                                                <span class="label label-info">@listing.Status</span>
+                                                break;
+                                            case TortoogaApp.Models.ListingStatus.Booked:
+                                                <span class="label label-success">@listing.Status</span>
+                                                break;
+                                            case TortoogaApp.Models.ListingStatus.Inactive:
+                                                <span class="label label-default">@listing.Status</span>
+                                                break;
+                                            case TortoogaApp.Models.ListingStatus.Cancelled:
+                                                <span class="label label-warning">@listing.Status</span>
+                                                break;
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a target="_blank" asp-action="View" class="btn btn-default" asp-controller="Listing" asp-route-id="@listing.ListingGuid"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> View Listing</a>
+                                <a asp-action="Edit" class="btn btn-default" asp-controller="Listing" asp-route-id="@listing.ListingGuid"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i>Edit Listing</a>
+                            </div>
+                        </div>
+                    </div>
+                                        }
+            </div>
+        </div>
+    </div>

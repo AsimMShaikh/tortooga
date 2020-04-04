@@ -1,0 +1,159 @@
+﻿@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Dashboard";
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+<input type="hidden" id="hdnUserId" value="@ViewBag.UserId" />
+
+<div class="col-md-12">
+    <div class="col-md-6">
+        <h2>Welcome @User.Identity.Name</h2>
+    </div>
+
+    <div class="col-md-6">
+        <div class="pull-right mt27">
+            <select id="ddlPanelHandling"></select>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="dashboard-block dashboard-shipment-status panel panel-default" id="divShipmentStatus">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-align-left"> Shipment Status</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body custom-scroll max-height280">
+                    <table id="tblShipmentStatus" class="table">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="dashboard-block dashboard-booking-status panel panel-default" id="divBookingStatus">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-ship">Bookings Status</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body custom-scroll max-height280">
+                    <table id="tblBookingStatus" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Booking Number</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td>A09221</td>
+                                    <td>XX</td>
+                                    <td>XX</td>
+                                    <td>XX</td>
+                                    <td><span class="btn btn-info">View Details</span></td>
+                                </tr>
+                                <tr>
+                                    <td>B13321</td>
+                                    <td>XX</td>
+                                    <td>XX</td>
+                                    <td>XX</td>
+                                    <td><span class="btn btn-info">View Details</span></td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="dashboard-block dashboard-inbox panel panel-default" id="divInbox">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-inbox"> Inbox</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>Subject</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td><a href="#">chris.humprey@email.com</a></td>
+                                    <td>Shipment Enquiries</td>
+                                    <td><span class="pull-right text-muted small">12.30 PM</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">sam.hasting@email.com</a></td>
+                                    <td>Change of Address</td>
+                                    <td><span class="pull-right text-muted small">10:11 AM</span></td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+                @*  <div class="panel-footer"><a href="#" class="btn btn-block btn-default">View All</a></div>*@
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-block dashboard-notification panel panel-default" id="divNotificationPanel">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-bell"> Notification Panel</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body with-footer">
+                    <div class="list-group" id="divNotifications_User">
+                        @*<a href="#" class="list-group-item">
+                                <i class="fa fa-comment"> New Message</i>
+                                <span class="pull-right text-muted small"><em>03:00 PM</em></span>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-anchor"> Shipment Arrival</i>
+                                <span class="pull-right text-muted small"><em>11:12 AM</em></span>
+                            </a>*@
+                    </div>
+                </div>
+                <div class="panel-footer"><a href="/Notifications" class="btn btn-block btn-default">View All</a></div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBImznw1HMExjEzlV-LbryEBJYVGWS3ETs" async defer></script>
+
+@section Scripts{
+        <script src="~/js/Dashboard/UserDashboard.js"></script>
+}

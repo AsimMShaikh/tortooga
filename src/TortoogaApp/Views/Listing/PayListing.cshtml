@@ -1,0 +1,237 @@
+﻿@model TortoogaApp.ViewModels.ListingViewModels.PayListingViewModel
+
+@{
+    ViewBag.Title = "Payment Details";
+    //HACK: hardcode booking fee first
+    ViewBag.BookingFee = 5.00m;
+    ViewBag.TotalPrice = Model.ListingDetailVm.Price + ViewBag.BookingFee;
+}
+
+@section Scripts{
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script type="text/javascript">
+        $().ready(function () {
+            var purchaseSpaceBtn = $('#purchaseSpace');
+            var purchasingModal = $('#purchasingModal');
+            var paymentForm = $('#bookListing');
+            var paymentSuccessful = true;
+
+            paymentForm.submit(function () {
+                if (!paymentForm.valid()) {
+                    return false;
+                }
+
+                purchaseSpaceBtn.prop('disabled', true);
+                purchasingModal.modal({ backdrop: 'static', keyboard: false });
+
+                //TODO: payment gateway call here, or direct them to payment gateway page using mock variable for now
+
+                if (paymentSuccessful == true) {
+                    setTimeout(function () { purchasingModal.modal('toggle'); return true; }, 5000);
+                }
+                else {
+                    return false;
+                }
+
+            });
+        });
+    </script>
+}
+
+<div class="col-md-12">
+    <div class="container-fluid">
+        <section id="paymentDetails">
+            <div class="col-xs-12 col-sm-6 col-md-8">
+                <div class="container-fluid">
+                    <h3>Payment Details</h3>
+                    <hr />
+                    <form asp-antiforgery="true" asp-action="BookListing" asp-route-listingId="@Model.ListingDetailVm.ListingGuid" method="post" id="bookListing" class="form-horizontal" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" asp-for="CardHolderName"></label>
+                                <div class="col-sm-9">
+                                    <input asp-for="CardHolderName" type="text" class="form-control" placeholder="Card Holder's Name">
+                                    <span asp-validation-for="CardHolderName" class="text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" asp-for="CardType"></label>
+                                <div class="col-sm-9">
+                                    <select asp-for="CardType" class="form-control" placeholder="Card Type" asp-items="Html.GetEnumSelectList<CreditCardType>()"></select>
+                                    <img src="http://i76.imgup.net/accepted_c22e0.png" alt="creditCardType" />
+                                    <span asp-validation-for="CardType" class="text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" asp-for="CardNumber"></label>
+                                <div class="col-sm-9">
+                                    <input asp-for="CardNumber" type="number" class="form-control" placeholder="Debit/Credit Card Number">
+                                    <span asp-validation-for="CardNumber" class="text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" asp-for="ExpiryMonth"></label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <select class="form-control col-sm-2" asp-for="ExpiryMonth">
+                                                <option value="">Month</option>
+                                                <option value="01">Jan (01)</option>
+                                                <option value="02">Feb (02)</option>
+                                                <option value="03">Mar (03)</option>
+                                                <option value="04">Apr (04)</option>
+                                                <option value="05">May (05)</option>
+                                                <option value="06">June (06)</option>
+                                                <option value="07">July (07)</option>
+                                                <option value="08">Aug (08)</option>
+                                                <option value="09">Sep (09)</option>
+                                                <option value="10">Oct (10)</option>
+                                                <option value="11">Nov (11)</option>
+                                                <option value="12">Dec (12)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <select class="form-control" asp-for="ExpiryYear">
+                                                <option value="">Year</option>
+                                                <option value="16">2016</option>
+                                                <option value="17">2017</option>
+                                                <option value="18">2018</option>
+                                                <option value="19">2019</option>
+                                                <option value="20">2020</option>
+                                                <option value="21">2021</option>
+                                                <option value="22">2022</option>
+                                                <option value="23">2023</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="ExpiryYear" class="text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" asp-for="Cvv"></label>
+                                <div class="col-sm-3">
+                                    <input type="text" asp-for="Cvv" class="form-control" placeholder="Security Code">
+                                    <span asp-validation-for="Cvv" class="text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <input type="submit" id="purchaseSpace" class="btn btn-success" value="Purchase Space" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <input type="hidden" asp-for="@Model.BookListingVm.Height" value="@Model.BookListingVm.Height" />
+                        <input type="hidden" asp-for="@Model.BookListingVm.Width" value="@Model.BookListingVm.Width" />
+                        <input type="hidden" asp-for="@Model.BookListingVm.Length" value="@Model.BookListingVm.Length" />
+                        <input type="hidden" asp-for="@Model.ListingDetailVm.Price" value="@ViewBag.TotalPrice" />
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="bookingConfirmation">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4>Booking Summary</h4>
+                    </div>
+                    <div class="panel-body">
+                        @* TODO: Insert photo thumbnail here *@
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                <h3 id="bookingFee"><i class="fa fa-ship pull-left fa-lg" aria-hidden="true"></i>&nbsp; @Model.ListingDetailVm.CarrierName</h3>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label asp-for=@Model.ListingDetailVm.Origin></label>
+                                <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.ListingDetailVm.Origin" />
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label asp-for=@Model.ListingDetailVm.Destination></label>
+                                <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.ListingDetailVm.Destination" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label>Departure Date</label>
+                                <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.ListingDetailVm.DepartureDate.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label>Est. Arrival Date</label>
+                                <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.ListingDetailVm.EstimatedArrivalDate.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                Available Space: <strong>@Model.ListingDetailVm.SquareFeet</strong> sq ft
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                Required Space: <strong>@Model.BookListingVm.SquareFeet</strong> sq ft
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                                <label>
+                                    Length
+                                </label>
+                                <input class="form-control input-sm text-center" readonly="readonly" value="@Model.BookListingVm.Length" for="Length" />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                                <label>
+                                    Width
+                                </label>
+                                <input class="form-control input-sm text-center" readonly="readonly" value="@Model.BookListingVm.Width" for="Width" />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                                <label>Height</label>
+                                <input class="form-control input-sm text-center" readonly="readonly" value="@Model.BookListingVm.Height" for="Height" />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 text-left">
+                                Subtotal:<br />
+                                Booking Fee:<br />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 text-right">
+                                <i class="fa fa-usd pull-left" aria-hidden="true"></i>@Model.ListingDetailVm.Price<br />
+                                <i class="fa fa-usd pull-left" aria-hidden="true"></i> <span id="bookingFee">@ViewBag.BookingFee</span><br />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <hr />
+                                <strong><span class="input-lg pull-left">Total</span></strong> <strong> <span class="input-lg pull-right"><i class="fa fa-usd" aria-hidden="true"></i> @ViewBag.TotalPrice</span></strong>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div id="purchasingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tortooga</h4>
+            </div>
+            <div class="modal-body text-center center-block">
+                <h5>Processing payment.. please do not refresh page...</h5>
+                <br />
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+﻿@model  TortoogaApp.ViewModels.BookingViewModels.IndexBookingViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<Role> RoleManager
+
+@{
+    Layout = "_MainLayout";
+    ViewBag.Title = "Manage Bookings";
+    var isCarrierAdmin = await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), RoleType.CARRIER_ADMIN);
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <h5>Manage Bookings</h5>
+            <span>Total <i>@Model.Bookings.Count()</i> @Model.BookingStatus bookings</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            @foreach (var booking in Model.Bookings)
+            {
+                <div class="search-result row">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+                            <a asp-controller="Listing" asp-action="View" asp-route-id="@booking.ListingGuid" title="Lorem ipsum" class="thumbnail"><img src="~/images/listing_images/mocklisting/container_img1.png" alt="Lorem ipsum" /></a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="fa fa fa-fw fa-plane"></i> <span>@booking.Listing.Origin</span></li>
+                                <li><i class="fa fa fa-fw fa-calendar"></i> <span>@booking.Listing.DepartureDate.ToString("yyyy-MM-dd")</span></li>
+                                &nbsp;
+                                <li><i class="fa fa fa-fw fa-plane fa-rotate-90"></i> <span>@booking.Listing.Destination</span></li>
+                                <li><i class="fa fa fa-fw fa-calendar"></i> <span>@booking.Listing.EstimatedArrivalDate.ToString("yyyy-MM-dd")</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-5">
+                            <div class="row"><a asp-controller="Listing" asp-action="View" asp-route-id="@booking.ListingGuid"><h5>@booking.Listing.Title</h5></a></div>
+                            @if (isCarrierAdmin)
+                            {
+                                <div class="row">
+                                    <strong>Booked by user:</strong> @booking.CreatedByUser.UserName
+                                </div>
+                            }
+                            <div class="row">
+                                <strong>Booking Ref:</strong> @booking.ReferenceNumber
+                            </div>
+                            <div class="row">Space booked: <strong>@booking.BookedHeight</strong>H x <strong>@booking.BookedLength</strong>L x <strong>@booking.BookedWidth</strong>W <i>ft</i> available</div>
+                            <div class="row top-pad-1">
+                                Listing Reference: <strong><a asp-controller="Listing" asp-action="View" asp-route-id="@booking.Listing.ListingGuid">@booking.Listing.ReferenceNumber</a></strong>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2 text-center">
+                            <div class="row">
+                                @{
+                                    switch (booking.Status)
+                                    {
+                                        case TortoogaApp.Models.BookingStatus.BookedButNotConfirmed:
+                                            <span class="label label-info">Pending Approval</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.BookedAndConfirmed:
+                                            <span class="label label-success">Approved</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.Cancelled:
+                                            <span class="label label-default">Cancelled</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.Rejected:
+                                            <span class="label label-warning">Rejected</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.Completed:
+                                            <span class="label label-primary">Completed</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.Shipped:
+                                            <span class="label label-success">Shipped</span>
+                                            break;
+                                        case TortoogaApp.Models.BookingStatus.Delayed:
+                                            <span class="label label-danger">Delayed</span>
+                                            break;
+                                    }
+                                }
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    @if (isCarrierAdmin)
+                                    {
+                                        @if (booking.Status == TortoogaApp.Models.BookingStatus.BookedButNotConfirmed)
+                                        {
+                                            <a asp-action="Approve" class="btn btn-success" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Approve</a>
+                                            <a asp-action="Reject" class="btn btn-danger" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Reject</a>
+                                        }
+                                        @if (booking.Status == TortoogaApp.Models.BookingStatus.BookedAndConfirmed)
+                                        {
+                                            <a asp-action="Delayed" class="btn btn-warning" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Delayed</a>
+                                            <a asp-action="Shipped" class="btn btn-info" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Shipped</a>
+                                        }
+                                        @if (booking.Status == TortoogaApp.Models.BookingStatus.Shipped)
+                                        {
+                                            <a asp-action="Delayed" class="btn btn-warning" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Delayed</a>
+                                            <a asp-action="Completed" class="btn btn-success" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Complete</a>
+                                        }
+                                        @if (booking.Status == TortoogaApp.Models.BookingStatus.Delayed)
+                                        {
+                                            <a asp-action="Shipped" class="btn btn-warning" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Shipped</a>
+                                            <a asp-action="Completed" class="btn btn-success" asp-controller="Booking" asp-route-id="@booking.BookingGuid">Complete</a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                    }
+        </div>
+    </div>
+</div>

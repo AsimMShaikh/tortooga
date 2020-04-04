@@ -1,0 +1,36 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:5000/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "TortoogaApp": {
+      "commandName": "Project",
+      "launchUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "MAILROOT": "C:\\Users\\Danial\\Desktop\\TortoogaMailRoot\\",
+        "DEVELOPMENT_EMAIL_CREDENTIAL": "2427H6D,Mz9zwe",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "DotnetWatch": {
+      "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "commandLineArgs": "watch run --server.urls http://*:8080",
+      "launchUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

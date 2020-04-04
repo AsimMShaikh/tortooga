@@ -1,0 +1,334 @@
+@model TortoogaApp.ViewModels.AccountViewModels.CarrierProfileSetupViewModel
+
+@{
+    Layout = "_SiteLayout";
+    var PageTitle = ViewBag.Title;
+    var ApplicationWebAppUrl = ViewBag.AppUrl;
+    string defaultCompanyLogo = "/images/company_default.png";   
+}
+
+<!DOCTYPE html>
+<style>
+    #field {
+        margin-bottom: 20px;
+    }
+</style>
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="~/lib/dropzone/dist/dropzone.js"></script>
+    <link type="text/css" rel="stylesheet" href="~/lib/dropzone/dist/dropzone.css" />
+    <script>
+        $(document).ready(function () {
+            var uploadedFileName;
+            $.guid= 0;
+            var next = 1;
+            $(".add-more").click(function (e) {
+                debugger;
+
+                e.preventDefault();
+                var addto = ".input-append";
+
+                next = next + 1;
+                var addRemove = "#field" + (next);
+                var newIn = '<div class="field mb15" id="field' + (next) + '"><div class="input-group"><input autocomplete="off" class="input form-control" id="field' + next + '" name="field" type="text" /><span class="input-group-btn"><a id="remove' + (next) + '" class="btn btn-danger remove-me">-</a></span></div></div>';
+                var newInput = $(newIn);
+
+                $(addto).append(newInput);
+
+                $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+                $("#count").val(next);
+
+                $('.remove-me').click(function () {
+                    $(this).parents('.input-append').find(addRemove).remove();
+                });
+            });
+
+            $("#frmCarrierDetails").on("submit", function (event) {
+                debugger;
+                event.preventDefault();
+                
+                var shipData = '';
+                if ($('#fields').find("[name='field']").val() == "") {
+                    debugger;
+                    alert('Please enter what we ship');
+                    return false;
+                }
+                $('#fields').find("[name='field']").each(function () {
+                    shipData += $(this).val() + ",";
+                    return true;
+                });
+
+                $('#shipItems').val(shipData);
+                if (uploadedFileName != undefined && uploadedFileName != "") {
+                    debugger;
+                    $('#logoimg').val(uploadedFileName);                    
+                } else {
+
+                    alert('Please select compnay logo');
+                    return false;
+                }
+                
+                var posturl = '/Account/SetUpCarrierProfile';
+                $.ajax({
+                    url: posturl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.result == 'Redirect') {
+                            //redirecting to main page from here for the time being.
+                            window.location = response.url;
+                        }
+                    }
+                });
+            });
+
+            $("input[name='field']").keypress(function (e) {
+                var regex = new RegExp("^[a-zA-Z0-9]+$");
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+
+                e.preventDefault();
+                return false;
+            });
+
+
+            var FormDropzone = function () {
+
+
+                return {
+
+                    //main function to initiate the module
+                    init: function () {
+
+                        Dropzone.options.CompanyLogo = {
+
+                            //autoProcessQueue: false,
+                            uploadMultiple: false,
+                            parallelUploads: 1,
+                            addRemoveLinks: true,
+                            maxFiles: 1,
+                            acceptedFiles: '.jpg,.jpeg,.JPEG,.JPG,.png,.PNG',
+                            init: function () {
+                                this.on("addedfile", function (file) {
+
+                                    if (file.size > (1024 * 1024 * 1)) // not more than 1mb
+                                    {
+                                        this.removeFile(file); // if you want to remove the file or you can add alert or presentation of a message
+                                        alert("File size exceeds limit!");
+                                    }
+                                    // Create the remove button
+                                    var removeButton = Dropzone.createElement("<button class='btn btn-sm btn-block'>Remove file</button>");
+                                    debugger;
+                                    // Capture the Dropzone instance as closure.
+                                    var _this = this;
+                                    file.name = file.name + '' + ($.guid++) + '';
+                                    uploadedFileName = file.name;
+                                    // Listen to the click event
+                                    removeButton.addEventListener("click", function (e) {
+                                        // Make sure the button click doesn't submit the form:
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        uploadedFileName = "";
+                                        // Remove the file preview.
+                                        _this.removeFile(file);
+                                        // If you want to the delete the file on the server as well,
+                                        // you can do the AJAX request here.
+                                    });
+
+                                    // Add the button to the file preview element.
+                                    file.previewElement.appendChild(removeButton);
+                                });
+
+                                this.on("maxfilesexceeded", function (file) {
+                                    this.removeFile(file);
+                                    alert("No more files please!");
+                                });
+                            }
+                        }
+                    }
+                };
+            }();
+            FormDropzone.init();
+
+        });
+            //var next = 1;
+            //$(".add-more").click(function (e) {
+            //    e.preventDefault();
+            //    var addto = "#field" + next;
+            //    var addRemove = "#field" + (next);
+            //    next = next + 1;
+            //    var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            //    var newInput = $(newIn);
+            //    var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            //    var removeButton = $(removeBtn);
+            //    $(addto).after(newInput);
+            //    $(addRemove).after(removeButton);
+            //    $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+            //    $("#count").val(next);
+
+            //    $('.remove-me').click(function (e) {
+            //        e.preventDefault();
+            //        var fieldNum = this.id.charAt(this.id.length - 1);
+            //        var fieldID = "#field" + fieldNum;
+            //        $(this).remove();
+            //        $(fieldID).remove();
+            //    });
+            //});
+
+       
+    </script>
+}
+
+
+<meta name="viewport" content="width=device-width" />
+<title>Your Profile</title>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="SetUpCarrierProfile" id="frmCarrierDetails">
+                <div class="form-horizontal">
+                    <h4>Hello @Model.BusinessName, Please provide folowing details before you start using Tortooga!</h4>
+                    <input type="hidden" name="BusinessName" value="@Model.BusinessName" />
+                    <div>@Html.ValidationSummary()</div>
+                    <input type="hidden" name="CarrierRegistrationGuid" value="@Model.CarrierRegistrationGuid" />
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OldPassword" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="OldPassword" class="form-control" />
+                            <span asp-validation-for="OldPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CompanyBio" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <textarea rows="4" asp-for="CompanyBio" class="form-control"></textarea>
+                            <span asp-validation-for="CompanyBio" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="count" value="1" />
+                    <input asp-for="CarrierShippingItems" type="hidden" id="shipItems" />
+                    <div class="form-group" id="fields">
+                        <label asp-for="CarrierShippingItems" class="col-md-3 control-label"></label>
+                        <div class="controls col-md-7" id="profs">
+                            <div class="input-append">
+                                <div id="field">
+                                    <div class="input-group">
+                                        <input autocomplete="off" class="input form-control" id="field1" name="field" type="text" data-items="8" />
+                                        <span class="input-group-btn">
+                                            <button id="b1" class="btn add-more" type="button">+</button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <small>Press + to add another ship category :)</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SiteUrl" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="SiteUrl" class="form-control" />
+                            <span asp-validation-for="SiteUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddressLine1" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="AddressLine1" class="form-control" />
+                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddressLine2" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="AddressLine2" class="form-control" />
+                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostCode" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="PostCode" class="form-control" />
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BankAccountName" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="BankAccountName" class="form-control" />
+                            <span asp-validation-for="BankAccountName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BankIdentificationNumber" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="BankIdentificationNumber" class="form-control" />
+                            <span asp-validation-for="BankIdentificationNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BankAccountNumber" class="col-md-3 control-label"></label>
+                        <div class="col-md-7">
+                            <input asp-for="BankAccountNumber" class="form-control" />
+                            <span asp-validation-for="BankAccountNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-7">
+                            <input type="submit" value="Login" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                <input asp-for="CompanyLogoImage" type="hidden" id="logoimg" />
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="clearfix profile-img-block">
+                    <div class="col-sm-12 col-md-6">
+                        <label>Company Logo</label>                       
+                        <img src=@defaultCompanyLogo class="img-thumbnail" />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-sm-12">
+                        <form asp-action="Upload" asp-controller="Account" class="dropzone" method="post" id="CompanyLogo" enctype="multipart/form-data" role="form"></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

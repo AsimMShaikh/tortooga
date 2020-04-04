@@ -1,0 +1,197 @@
+@model TortoogaApp.ViewModels.CarrierViewModels.CarrierBioViewModel
+
+@{
+    Layout = "_CompanyBioLayout";
+    ViewData["Title"] = "Carrier Bio";
+    var ApplicationWebAppUrl = ViewBag.AppUrl;
+    string defultURI = ApplicationWebAppUrl + "/images/companydefaultlogo.png";
+    string path = string.IsNullOrEmpty(Model.ImageUrl) ? defultURI : Model.ImageUrl;
+}
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+<input type="hidden" id="hdnCarrierGuid" value="@Model.CarrierGuid" />
+<div class="row company-bio">
+
+    <div class="col-md-12">
+        <div class="inner-part">
+            <div class="clearfix">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src=@path class="img-thumbnail" />   
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-inline">
+                            <h2>@Model.BusinessName</h2>
+                            <div style="display:flex">
+                              <h4>  @Model.State , @Model.Country</h4>
+                            </div>
+                            <div class="clearfix">
+                                <div class="star-block pull-left mr10">
+                                    <div class="pull-left mr10 mt10">
+                                        <div class="star-rating-block">
+                                            <div id="stars" class="gridstarrr" data-rating=@Model.CarrierRatings></div>
+                                            <div class="grid-fav"></div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="pull-left"><h4>@Model.CarrierRatings out 5 (@Model.TotalNumberOfRatings reviews)</h4></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="pull-right">
+                            <h3 class="text-center">Verified Info</h3>
+                            <ul class="clearfix verified-info">
+                                <li class="clearfix">
+                                    <label>Email ID:</label>
+                                    <div> @Model.Email</div>
+                                    <i class="pull-right fa fa-check-circle-o"></i>
+                                </li>
+                                <li class="clearfix">
+                                    <label>Phone Number:</label>
+                                    <div>@Model.PhoneNumber</div>
+                                    <i class="pull-right fa fa-check-circle-o"></i>
+                                </li>
+                                <li class="clearfix">
+                                    <label>Address:</label>
+                                    <div class="pull-left">
+                                        <span>
+                                            @Model.AddressLine1
+                                            @Model.AddressLine2
+                                        </span>
+
+                                        <span>@Model.City @Model.PostCode</span>
+                                    </div>
+                                    <i class="pull-right fa fa-check-circle-o"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inner-part minheight150">
+            <div class="divCompanyBio">
+                <h4>Company Bio</h4>
+                <span>@Model.CompanyBio</span>
+            </div>
+        </div>
+        <div class="inner-part minheight150" style="display:none">
+            <div class="">
+                <h3>We Ship To:</h3>
+                <div class="">
+                    <ul class="clearfix ship-location">
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                        <li>Location</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="inner-part minheight150">
+            <div class="">
+                <h4>WhatWe Ship:</h4>
+                <div class="">
+                    <ul class="clearfix ship-location">
+                        @foreach (var item in Model.ShippingItemsList)
+                        {
+                            <li><i class="glyphicon glyphicon-tag" style="margin-right:15px;"></i>@item</li>
+
+                        }
+                        @*<li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>
+                            <li>Category</li>*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @*<div class="inner-part">
+                <div class="">
+                    <div class="clearfix review-block-bottom">
+                        <div class="pull-left mr10"><small>Review</small></div>
+                        <div class="pull-left mr10">stare Here</div>
+                        <div class="pull-left"><small>4.1 out 5 (129 review)</small></div>
+                    </div>
+                    <div class="reviwer-listing">
+                        <ul>
+                            <li class="clearfix">
+                                <div class="img-block pull-left">
+                                    <img src="" alt="" />
+                                </div>
+                                <div class="content-block pull-left">
+                                    <div class="clearfix">
+                                        <div class="top-part clearfix">
+                                            <div class="pull-left mr10">Ben jones <span>(3 days ago)</span> </div>
+                                            <div class="pull-left">Star Here</div>
+                                        </div>
+                                        <div class="commet-part">
+                                            <h5>Excellent Service</h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="img-block pull-left">
+                                    <img src="" alt="" />
+                                </div>
+                                <div class="content-block pull-left">
+                                    <div class="clearfix">
+                                        <div class="top-part clearfix">
+                                            <div class="pull-left mr10">Ben jones <span>(3 days ago)</span> </div>
+                                            <div class="pull-left">Star Here</div>
+                                        </div>
+                                        <div class="commet-part">
+                                            <h5>Excellent Service</h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>*@
+        <div class="inner-part">
+            <div class="row">
+
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="clearfix review-block-bottom">
+                                <div class="pull-left mr10"><h5>Reviews</h5></div>
+                                <div class="pull-left mr10 mt10">
+                                    <div class="star-rating-block">
+                                        <div id="stars" class="gridstarrr" data-rating=@Model.CarrierRatings></div>
+                                        <div class="grid-fav"></div>
+                                    </div>
+                                </div>
+                                <div class="pull-left"><h5>@Model.CarrierRatings out 5 (@Model.TotalNumberOfRatings reviews)</h5></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Partial("~/Views/Carrier/_UserRatings.cshtml")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Ratings/startrating.js"></script>
+    <script src="~/js/Carrier/UserRatingsList.js"></script>
+}
+

@@ -1,0 +1,27 @@
+@model List<TortoogaApp.ViewModels.RatingViewModels.CustomerRatingsViewModel>
+
+@{
+    ViewData["Title"] = "RatingsGivenByCarrier";
+    Layout = "_MainLayout";
+    var ApplicationBaseURL = ViewBag.AppUrl;
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+
+<h2>Feedback For Shipers</h2>
+
+<div id="divCarrierPendingRatings" class="pendingratingsdiv">
+    @Html.Partial("~/Views/CustomerRatings/_CustomerPendingRatings.cshtml", Model)
+</div>
+<br/>
+<div>
+    <h4>Past Booking Ratings</h4>
+    <hr />
+    @Html.Partial("~/Views/CustomerRatings/_ReceivedRatings.cshtml")
+</div>
+
+@section Scripts {
+    <script src="~/js/Ratings/startrating.js"></script>
+    <script src="~/js/Ratings/CarrierCustomerRatings.js"></script>
+}
+

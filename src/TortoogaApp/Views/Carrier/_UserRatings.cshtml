@@ -1,0 +1,28 @@
+<h4>Feedback List</h4>
+<div>
+    
+       
+            <div id="myTable_wrapper" class="dataTables_wrapper no-footer clearfix">
+                <div class="dataTables_length pull-left">
+                    <label>
+                        Show
+                        <select id="ddlCarrierRatings_PageSizeSelection">
+                            <option value="5">5</option>
+                            <option value="10" selected="selected">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select> entries
+                    </label>
+                </div>
+                @*<div id="tblUserRatingsList_filter" class="dataTables_filter pull-right"><label>Search: <input type="search" class="" placeholder="" aria-controls="tblUserRatingsList" id="txtUserRatingsSearch"></label></div>*@
+            </div>            
+            <div class="reviwer-listing">
+                <ul>
+                    <table id="tblUserRatingsList" class="table table-hover  dataTable ratings-block">
+                        <tbody></tbody>
+                    </table>
+                </ul>
+            </div>
+      
+   
+</div>

@@ -1,0 +1,51 @@
+﻿@model TortoogaApp.ViewModels.SearchViewModels.SearchListingViewModel
+
+@{
+    ViewBag.Title = "Search Result";
+}
+
+<div class="col-md-3">
+    @{await Html.RenderPartialAsync("_SideSearchBar", Model.Filter);}
+</div>
+
+<div class="col-md-9">
+    <div class="container">
+        <div>
+            <h4>Search Results</h4>
+            <h6 class="lead"><i>@Model.Listings.Count()</i> results were found for the search</h6>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-12">
+            @foreach (var listing in Model.Listings)
+            {
+                <div class="search-result row">
+                    <div class="col-xs-12 col-sm-12 col-md-3">
+                        <a target="_blank" asp-action="View" asp-controller="Listing" asp-route-id="@listing.ListingGuid" title="Lorem ipsum" class="thumbnail"><img src="~/images/listing_images/mocklisting/container_img1.png" alt="Lorem ipsum" /></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                            <li><i class="fa fa fa-fw fa-plane"></i> <span>@listing.Origin</span></li>
+                            <li><i class="fa fa fa-fw fa-calendar"></i> <span>@listing.DepartureDate.ToString("yyyy-MM-dd")</span></li>
+                            &nbsp;
+                            <li><i class="fa fa fa-fw fa-plane fa-rotate-90"></i> <span>@listing.Destination</span></li>
+                            <li><i class="fa fa fa-fw fa-calendar"></i> <span>@listing.EstimatedArrivalDate.ToString("yyyy-MM-dd")</span></li>
+                            &nbsp;
+                            <li><i class="fa fa fa-fw fa-ship"></i> <span>@listing.CarrierName</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-5">
+                        <h5><a target="_blank" asp-action="View" asp-controller="Listing" asp-route-id="@listing.ListingGuid" title="">@listing.Title</a></h5>
+                        <p>
+                            @(listing.Description.Length >= 160 ? listing.Description.Substring(0, 159) + "..." : listing.Description)
+                        </p>
+                        <span><strong>@listing.Height</strong>H x <strong>@listing.Length</strong>L x <strong>@listing.Width</strong>W <i>ft</i> available</span>
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-2 text-center">
+                        <h3><i class="fa fa fa-fw fa-dollar"></i><span>@listing.Price</span></h3>
+                        <br />
+                        <a target="_blank" asp-action="View" asp-controller="Listing" asp-route-id="@listing.ListingGuid" class="btn btn-info">More Info</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

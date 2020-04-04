@@ -1,0 +1,43 @@
+@model List<TortoogaApp.ViewModels.SystemAdminViewModels.ManageApprovalViewModel>
+@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Manage Approval";
+    var ApplicationWebAppUrl = ViewBag.AppUrl;
+
+}
+
+
+<div>
+    <div class="box-with-border">
+        <div class="clearfix">
+            <h4>Maange Approvals</h4>
+        </div>
+        <div class="clearfix">
+
+
+            <div class="table-responsive">
+                <div id="myTable_wrapper" class="dataTables_wrapper no-footer clearfix">
+                    <div class="dataTables_length pull-left mb0">
+                        <label>
+                            Show
+                            <select id="ddlCarrierUsers_PageSizeSelection">
+                                <option value="5">5</option>
+                                <option value="10" selected="selected">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select> entries
+                        </label>
+                    </div>
+                    <div id="tblCarrierUsersList_filter" class="dataTables_filter pull-right mb0"><label>Search: <input type="search" class="" placeholder="" aria-controls="tblcarrierUserslst" id="txtCarrierUsersSearch"></label></div>
+                </div>
+                @Html.Partial("_ManageApprovalList.cshtml")
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/SystemAdmin/ManageApprovals.js"></script>
+}

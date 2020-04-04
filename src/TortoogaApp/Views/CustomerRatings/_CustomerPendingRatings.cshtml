@@ -1,0 +1,123 @@
+@model List<TortoogaApp.ViewModels.RatingViewModels.CustomerRatingsViewModel>
+
+<h4>Your Pending Ratings</h4>
+<table class="ratings-block">
+    @if (Model.Count() > 0)
+    {
+        @foreach (var listing in Model)
+        {
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="row" style="background-color:white;">
+                            <div class="col-xs-12 col-sm-12 col-md-2 text-center">
+                                @if (string.IsNullOrEmpty(listing.UserProfileImagePath))
+                                {
+                                    <img src="~/images/defaultusergrid.jpg" />
+                                }
+                                else
+                                {
+                                    <img src="@listing.UserProfileImagePath" style="width:100%;" />
+                                }
+                                <div class="clearfix"></div>
+                                <label class="control-label">@listing.UserName</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <div class="row">
+                                    <label class="col-md-5 control-label">Booking Ref.:</label>
+                                    <div class="col-md-7">
+                                        @listing.BookingReferenceNumber
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-5 control-label">Listing Ref.:</label>
+                                    <div class="col-md-7">
+                                        @listing.ListingReferenceNumber
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-5 control-label">Average Ratings (@listing.Count):</label>
+                                    <div class="col-md-7">
+                                        
+                                        <div class="star-rating-block">
+                                            <div class="starrr" data-rating="@listing.Average"></div>
+                                            <div class="grid-fav"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row hiderow" id="IdsRow">
+                                    <label class="col-md-5 control-label mb9"></label>
+                                    <div class="col-md-7">
+                                        <label id="lblCarrierId"> @listing.CarrierID</label>
+                                        <label id="lblBookingId"> @listing.BookingID</label>
+                                        <label id="lblUserId"> @listing.UserId</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="row">
+                                    <label class="col-md-6 control-label">Origin:</label>
+                                    <div class="col-md-6">
+                                        @listing.Origin
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-6 control-label">Destination:</label>
+                                    <div class="col-md-6">
+                                        @listing.Destination
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-6 control-label">Departure Date</label>
+                                    <div class="col-md-6">
+                                        @listing.DepartedDate.ToString("yyyy/MM/dd")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-6 control-label">Arrival Date</label>
+                                    <div class="col-md-6">
+                                        @listing.ArrivalDate.ToString("yyyy/MM/dd")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="row">
+                                    <label class="col-md-5 control-label">Please Rate</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="star-rating-block">
+                                            <div id="star-CustomerRatings" class="starrr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a id="btnSubmitCustomerRating" title="Submit rating" class="btn btn-primary btn-sm"><i class="fa fa-save"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4 col-md-6">
+                        <h4>No Pending Ratings Available</h4>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+

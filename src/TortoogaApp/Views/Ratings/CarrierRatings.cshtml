@@ -1,0 +1,108 @@
+@model TortoogaApp.ViewModels.RatingViewModels.CarrierRatingsViewModel
+
+@{
+    ViewData["Title"] = "YourFeedbackRatings";
+    Layout = "_MainLayout";
+    var ApplicationBaseURL = ViewBag.AppUrl;
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+
+<h2>Your Feedback Ratings</h2>
+<br />
+<div class="container-fluid">
+    <div class="row" style="background-color:white;">
+        <div class="col-xs-12 col-sm-12 col-md-2">
+            <img src="~/images/companydefaultlogo.png" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-5" style="padding-top:40px;">
+            <div class="row">
+                <label class="col-md-5 control-label">Company Name</label>
+                <div class="col-md-7">
+                    @Model.CompanyName
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-5 control-label">Account Number</label>
+                <div class="col-md-7">
+                    @Model.AccountNumber
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-5 control-label">Email</label>
+                <div class="col-md-7">
+                    @Model.Email   
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-5 control-label">Phone Number</label>
+                <div class="col-md-7">
+                    @Model.PhoneNumber 
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-5" style="padding-top:40px;">
+            <div class="row">
+                <label class="col-md-4 control-label">Overall Experience</label>
+                <div class="col-md-3">
+                    <div class="star-rating-block">
+                        <div id="star-Overall" class="starrr" data-rating=@Model.OverallExperience></div>
+                        <div class="grid-fav"></div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    (@Model.OverAllPercent%)
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-4 control-label">Price</label>
+                <div class="col-md-3">
+                    <div class="star-rating-block">
+                        <div id="star-Overall" class="starrr" data-rating=@Model.Price></div>
+                        <div class="grid-fav"></div>                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    (@Model.PricePercent%)
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-4 control-label">Service</label>
+                <div class="col-md-3">
+                    <div class="star-rating-block">
+                        <div id="star-Overall" class="starrr" data-rating=@Model.Service></div>
+                        <div class="grid-fav"></div>                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    (@Model.ServicePercent%)
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-4 control-label">Communication</label>
+                <div class="col-md-3">
+                    <div class="star-rating-block">
+                        <div id="star-Overall" class="starrr" data-rating=@Model.Communication></div>
+                        <div class="grid-fav"></div>                      
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    (@Model.CommunicationPercent%)
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div>
+        @Html.Partial("_CarrierRatingsList.cshtml")
+    </div>
+    
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Ratings/startrating.js"></script>
+    <script src="~/js/Ratings/CarrierRatingsList.js"></script>
+}

@@ -1,0 +1,105 @@
+﻿@model TortoogaApp.ViewModels.SearchViewModels.SearchFilter
+
+<div class="sidebar-nav">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="visible-xs navbar-brand">Search</span>
+        </div>
+
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+            <div class="form-section">
+                <form asp-controller="Search" asp-action="SearchListing" method="get" role="form">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="Origin"></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-plane"></i></span>
+                                    <input class="form-control" asp-for="Origin" value="@Model.Origin" placeholder="From" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="Destination"></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-plane fa-rotate-90"></i></span>
+                                    <input class="form-control " asp-for="Destination" value="@Model.Destination" placeholder="To" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="ArriveByDate"></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
+                                    <input class="form-control " asp-for="ArriveByDate" type="text" value="@Model.ArriveByDate?.ToString("yyyy-MM-dd")" placeholder="Arrive By Date" onfocus="(this.type='date')" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <label class="sr-only">Height x Width x Length</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-balance-scale"></i></span>
+                                    <div class="input-group">
+                                        <input class="form-control " asp-for="MinimumHeight" placeholder="Min Height ft." onfocus="(this.type='number')" />
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-arrows-v"></i></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="form-control " asp-for="MinimumLength" placeholder="Min Length ft." onfocus="(this.type = 'number')" />
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-arrows-alt"></i></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="form-control " asp-for="MinimumWidth" placeholder="Min Width ft." onfocus="(this.type = 'number')" />
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-arrows-h"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="MaximumCost"></label>
+                                @* NOTE: The javascript script the slider is at _Layout page because we can't inject javascripts into partial *@
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-usd"></i></span>
+                                    <div class="input-group">
+                                        <input class="form-control " type="text" asp-for="MinimumCost" placeholder="Minimum Price" onfocus="(this.type='number')" value="@Model.MinimumCost" />
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-upload fa-rotate-180"></i></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="form-control " type="text" asp-for="MaximumCost" placeholder="Maximum Price" onfocus="(this.type='number')" value="@Model.MaximumCost" />
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-upload"></i></span>
+                                    </div>
+                                    <div class="cost-slider" style="">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Reviews <span class="badge">1,118</span></a></li>*@
+                        <li><div class="form-group text-center"><input type="submit" class="btn btn-default btn-primary" style="width:50%" value="Search" /></div></li>
+                    </ul>
+                </form>
+            </div>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>

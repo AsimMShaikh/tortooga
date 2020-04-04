@@ -1,0 +1,55 @@
+
+@{
+    ViewData["Title"] = "Notifications";
+    Layout = "_MainLayout";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box-with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Your Notifications</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mt0  table-responsive">
+                        <div id="myTable_wrapper" class="dataTables_wrapper no-footer clearfix">
+                            <div class="dataTables_length pull-left mb0">
+                                <label>
+                                    Show
+                                    <select id="ddlNotifications_PageSizeSelection">
+                                        <option value="5">5</option>
+                                        <option value="10" selected="selected">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select> entries
+                                </label>
+                            </div>
+                            <div id="tblNotifications_filter" class="dataTables_filter pull-right mb0"><label>Search: <input type="search" class="" placeholder="" aria-controls="tblPastCustomerRatingList" id="txtNotificationSearch"></label></div>
+                        </div>
+                        <table id="tblNotifications" class="table dataTable table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Notification Type</th>
+                                    <th>Received</th>
+                                    <th>Description</th>
+                                    <th>IsRead</th>
+                                    <th>Read On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/Notifications/Notification.js"></script>
+}
+
+
+

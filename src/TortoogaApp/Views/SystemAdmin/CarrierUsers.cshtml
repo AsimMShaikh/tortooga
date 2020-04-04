@@ -1,0 +1,81 @@
+@model TortoogaApp.ViewModels.SystemAdminViewModels.CarrierUsersListViewModel
+@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Manage Carrier Users";
+    var ApplicationWebAppUrl = ViewBag.AppUrl;
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box-with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Carrier Users</h3>
+                    <div class="inner-header clearfix">
+                    </div>
+                    <div class="clearfix filtter-block mb20">
+                        <form class="form-inline">
+                            <div class="form-group mr5">
+                                <label>Carrier </label>
+                                <select id="ddlCarriers" asp-items="@Model.Carriers" class="form-control">
+                                    <option value='0' selected>All  </option>
+                                </select>
+                            </div>
+                            <div class="form-group mr5">
+                                <label>Country </label>
+                                <select id="ddlCountry" asp-items="@Model.Countries" class="form-control">
+                                    <option value='0' selected>---Select---</option>
+                                </select>
+                            </div>
+                            <div class="form-group mr5">
+                                <label><input type="checkbox" id="chkDisabled" checked> Show Disabled</label>
+                            </div>
+                            @*<div class="form-group">
+                                    <a href="#" class="btn btn-primary" id="btnApplyFilter">Apply Filter</a>
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" class="btn btn-primary" id="btnResetFilters">Reset Filter</a>
+                                </div>*@
+                            @*<div id="tblCarrierUsersList_filter" class="dataTables_filter pull-right"><label>Search: <input type="search" class="" placeholder="" aria-controls="tblcarrierUserslst" id="txtCarrierUsersSearch"></label></div>*@
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <div id="myTable_wrapper" class="dataTables_wrapper no-footer clearfix">
+                                <div class="dataTables_length pull-left mb0">
+                                    <label>
+                                        Show
+                                        <select id="ddlCarrierUsers_PageSizeSelection">
+                                            <option value="5">5</option>
+                                            <option value="10" selected="selected">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                        </select> entries
+                                    </label>
+                                </div>
+                                <div id="tblCarrierUsersList_filter" class="dataTables_filter pull-right mb0"><label>Search: <input type="search" class="" placeholder="" aria-controls="tblcarrierUserslst" id="txtCarrierUsersSearch"></label></div>
+                            </div>
+                            @Html.Partial("_CarrierUsersList.cshtml")
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <a href="/SystemAdmin/AddEditCarrierUser?guid=" id="btnAddnewUser" class="btn btn-primary">Add User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<div>
+        @Html.Partial("_ManageApprovalList.cshtml")
+    </div>*@
+
+@section Scripts {
+    <script src="~/js/SystemAdmin/CarrierUsersList.js"></script>
+}

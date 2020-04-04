@@ -1,0 +1,140 @@
+@model List<TortoogaApp.ViewModels.RatingViewModels.FeedBackRatingsViewModel>
+
+<h4>Pending Ratings</h4>
+
+<table class="ratings-block">
+    @if (Model.Count() > 0)
+    {
+        @foreach (var listing in Model)
+        {
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-2 text-center">
+                            @if (string.IsNullOrEmpty(listing.CarrierLogoPath))
+                            {
+                                <img src="~/images/companydefaultlogo_gird.png" />
+                            }
+                            else
+                            {
+                                <img src="@listing.CarrierLogoPath" style="width:100%;" />
+                            }
+
+                            <div class="clearfix"></div>
+                            <label class="control-label">@listing.CarrirerName</label>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-3">
+                            <div class="row">
+                                <label class="col-md-5 control-label mb9">Origin</label>
+                                <div class="col-md-7">
+                                    @listing.Origin
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-5 control-label mb9">Destination</label>
+                                <div class="col-md-7">
+                                    @listing.Destination
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-5 control-label">Listing Ref.</label>
+                                <div class="col-md-7">
+                                    @listing.BookingReferenceNumber
+                                </div>
+                            </div>
+                            <div class="row hiderow" id="IdsRow">
+                                <label class="col-md-5 control-label mb9"></label>
+                                <div class="col-md-7">
+                                    <label id="lblCarrierId"> @listing.CarrierID</label>
+                                    <label id="lblBookingId"> @listing.BookingID</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-lg-3">
+                            <div class="row">
+                                <label class="col-md-6 control-label">Booking Ref.</label>
+                                <div class="col-md-6">
+                                    @listing.BookingReferenceNumber
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 control-label">Departure Date</label>
+                                <div class="col-md-6">
+                                    @listing.DepartedDate.ToString("yyyy/MM/dd")
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6 control-label">Arrival Date</label>
+                                <div class="col-md-6">
+                                    @listing.ArrivalDate.ToString("yyyy/MM/dd")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-12">
+                            <div class="row">
+                                <label class="col-md-5 control-label">Overall Experience</label>
+                                <div class="col-md-7">
+                                    <div class="star-rating-block">
+                                        <div id="star-Overall" class="starrr"></div>
+                                        @*<div id="stars" class="starrr" data-rating="4.5"></div>*@
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <label class="col-md-5 control-label">Service</label>
+                                <div class="col-md-7">
+                                    <div class="star-rating-block">
+                                        <div id="star-Service" class="starrr"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <label class="col-md-5 control-label">Communication</label>
+                                <div class="col-md-7">
+                                    <div class="star-rating-block">
+                                        <div id="star-Communication" class="starrr"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <label class="col-md-5 control-label">Price</label>
+                                <div class="col-md-4">
+                                    <div class="star-rating-block">
+                                        <div id="star-Price" class="starrr"></div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <a id="btnSubmitRating" title="Submit rating" class="btn btn-primary btn-sm"><i class="fa fa-save"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4 col-md-6">
+                        <h4>No Pending Ratings Available</h4>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

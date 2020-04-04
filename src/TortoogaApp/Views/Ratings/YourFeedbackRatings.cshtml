@@ -1,0 +1,24 @@
+@model List<TortoogaApp.ViewModels.RatingViewModels.FeedBackRatingsViewModel>
+
+@{
+    ViewData["Title"] = "YourFeedbackRatings";
+    Layout = "_MainLayout";    
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+
+<h2>Your Feedback Ratings</h2>
+<br/>
+<div id="divPendingRatings" class="pendingratingsdiv">
+    @Html.Partial("_PendingRatings", Model)
+</div>
+<br/>
+<div>
+    @Html.Partial("_CompletedRatings.cshtml")
+</div>
+
+@section Scripts {
+    <script src="~/js/Ratings/startrating.js"></script>
+    <script src="~/js/Ratings/FeedbackRatingsList.js"></script>
+}
+

@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TortoogaApp.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">      
+        <li class="dropdown">
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Register <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a asp-controller="Account" asp-action="RegisterUser">As Shipper</a>
+
+                </li>
+
+                <li>
+                    <a asp-controller="Account" asp-action="RegisterCarrier">As Carrier</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li><a asp-controller="Account" asp-action="Login">Log in</a></li>        
+    </ul>
+}

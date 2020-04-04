@@ -1,0 +1,257 @@
+﻿@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<input type="hidden" id="hdnAppBaseURL" value="@ViewBag.AppUrl" />
+<input type="hidden" id="hdnCarrierId" value="@ViewBag.CarrierId" />
+<input type="hidden" id="hdnIsAdmin" value="@ViewBag.IsAdmin" />
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Welcome</h2>
+    </div>
+
+    <div class="col-md-6">
+        <div class="pull-right mt27">
+            <select id="ddlPanelHandling"></select>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="dashboard">   
+    <div class="row">
+        <div class="col-md-5">
+            <div class="dashboard-block dashboard-customer-rating panel panel-default" id="divAccountSummary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-align-left"> Account Summary</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="#" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="#" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="panel-body-inner">
+                        <div class="col-md-6">
+                            Awaiting approval: <strong><label id="lblCarrier_AwaitingApproval"> XX</label></strong><br />
+                            In Transit: <strong><label id="lblCarrier_InTransit">XX</label></strong><br />
+                            Completed: <strong><label id="lblCarrier_Completed">XX</label></strong><br />
+                            Total Month Bookings: <strong><label id="lblCarrier_TotalMonthBookings">XX</label></strong><br />
+                            Total Month Revenue: <strong><label id="lblCarrier_TotalMonthRevenue">XX</label></strong><br />
+                            Current Escrow Total: <strong><label id="lblCarrier_CurrentEscrowTotal">XX</label></strong><br />
+                            Total Reviews Current Month: <strong><label id="lblCarrier_TotalReviewsCurrentMonth">XX</label></strong><br />
+                            Average Profit Per ft3: <strong><label id="lblCarrier_AverageProfitPerft">XX</label></strong><br />
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="dashboard-block dashboard-booking-pendings panel panel-default" id="divPendingBookings">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-ship"> Pending Bookings</i>
+                        <div class="btn-group pull-right">
+                            @*<a href="javascript:void(0);" title="Focus"><i class="fa fa-eye"></i></a>*@
+                            <a href="@ViewBag.AppUrl/Booking/ManageBookings?status=pending" title="View All Pending Bookings"><i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body custom-scroll max-height280">
+                    <table id="tblCarrierPendingBookings" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Listing</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-block dashboard-customer-rating panel panel-default" id="divCustomerRatings">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-pie-chart"> Customer Rating</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div id="customer-rating-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="dashboard-block dashboard-inbox panel panel-default" id="divInbox">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-inbox"> Inbox</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @*<table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Subject</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#">chris.humprey@email.com</a></td>
+                                    <td>Shipment Enquiries</td>
+                                    <td><span class="pull-right text-muted small">12.30 PM</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">sam.hasting@email.com</a></td>
+                                    <td>Change of Address</td>
+                                    <td><span class="pull-right text-muted small">10:11 AM</span></td>
+                                </tr>
+                            </tbody>
+                            <tr></tr>
+                        </table>*@
+                </div>
+                @*  <div class="panel-footer"><a href="#" class="btn btn-block btn-default">View All</a></div>*@
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-block dashboard-notification panel panel-default" id="divNotificationPanel">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-bell"> Notification Panel</i>
+                        <div class="btn-group pull-right">
+                            <a href="#" title="Focus"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body with-footer">
+                    <div class="list-group" id="divNotifications">                       
+                    </div>
+                </div>
+                <div class="panel-footer"><a href="/Notifications" class="btn btn-block btn-default">View All</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-block dashboard-booking-report panel panel-default" id="divBookingReports">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <i class="fa fa-file-text"> Booking Report</i>
+                        <div class="btn-group pull-right">
+                            @*<a href="javascript:void(0);" title="Focus"><i class="fa fa-eye"></i></a>*@
+                            <a href="@ViewBag.AppUrl/Booking/ManageBookings" title="View All Bookings"><i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="javascript:void(0);" class="collapse-btn" title="Expand/Collapse"><i class="fa fa-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="remove-btn" title="Remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body custom-scroll max-height280">
+                    <table id="tblCarrierBookingReports" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Details</th>
+                                <th>Booked By</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Size</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        //var data = [2, 3, 5, 8, 13, 21];
+
+        //var colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"];
+
+        //var width = 300,
+        //    height = 300;
+
+        //var outerRadius = height / 2 - 20,
+        //    innerRadius = outerRadius / 3,
+        //    cornerRadius = 10;
+
+        //var pie = d3.layout.pie()
+        //    .padAngle(.02);
+
+        //var arc = d3.svg.arc()
+        //    .padRadius(outerRadius)
+        //    .innerRadius(innerRadius);
+
+        //var svg = d3.select("#customer-rating-chart").append("svg")
+        //    .attr("width", width)
+        //    .attr("height", height)
+        //    .append("g")
+        //    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+        //svg.selectAll("path")
+        //    .data(pie(data))
+        //    .enter().append("path")
+        //    .each(function (d) { d.outerRadius = outerRadius - 20; })
+        //    .each(function (d) {
+        //        debugger;
+        //        d.outerRadius = outerRadius - 20;
+        //    })
+        //    .attr("d", arc)
+        //    .on("mouseover", arcTween(outerRadius, 0))
+        //    .on("mouseout", arcTween(outerRadius - 20, 150));
+
+        //function arcTween(outerRadius, delay) {
+        //    return function () {
+        //        d3.select(this).transition().delay(delay).attrTween("d", function (d) {
+        //            var i = d3.interpolate(d.outerRadius, outerRadius);
+        //            return function (t) { d.outerRadius = i(t); return arc(d); };
+        //        });
+        //    };
+        //}
+
+    </script>
+
+    <script src="~/js/Dashboard/CarrierDashboard.js"></script>
+}
+

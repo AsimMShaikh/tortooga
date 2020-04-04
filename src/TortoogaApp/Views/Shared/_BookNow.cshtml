@@ -1,0 +1,81 @@
+﻿@model TortoogaApp.ViewModels.ListingViewModels.DetailListingViewModel
+
+<section id="bookNow">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4><i class="fa fa-usd" aria-hidden="true"></i> @Model.Price <span class="pull-right">per sq ft</span></h4>
+            </div>
+            <form asp-controller="Listing" asp-action="PayListing" method="post" asp-route-id="@Model.ListingGuid">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <label>Departure Date</label>
+                            <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.DepartureDate.ToString("yyyy-MM-dd")" />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <label>Est. Arrival Date</label>
+                            <input class="form-control text-center" readonly="readonly" id="disabledInput" type="text" value="@Model.EstimatedArrivalDate.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            Available Space: <span id="availableSpace"><strong>@Model.SquareFeet</strong></span> sq ft
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            Required Space: <span id="requiredSpace">0.00</span> sq ft
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                            <label for="Length">Length</label><br />
+                            <input class="form-control input-sm" asp-for="Length" placeholder="ft." onfocus="(this.type='number')" />
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                            <label for="Width">Width</label><br />
+                            <input class="form-control input-sm" asp-for="Width" placeholder="ft." onfocus="(this.type='number')" />
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                            <label for="Height">Height</label><br />
+                            <input class="form-control input-sm" asp-for="Height" placeholder="ft." onfocus="(this.type='number')" />
+                        </div>
+                    </div>
+                    <div class="row text-center text-danger" id="validationRow">
+                        <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i><span class="input-sm text-center" id="validationMessage"></span>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 text-left">
+                            Subtotal:<br />
+                            Booking Fee:<br />
+                            <strong>Total:</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 text-right">
+                            <i class="fa fa-usd pull-left" aria-hidden="true"></i>@Model.Price<br />
+                            <i class="fa fa-usd pull-left" aria-hidden="true"></i> <span id="bookingFee">@ViewBag.BookingFee</span><br />
+                            <strong><i class="fa fa-usd pull-left" aria-hidden="true"></i> @ViewBag.TotalPrice </strong>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            @* Apparently that's how ASP.NET generates the checkbox, you need a hidden field with same name, when check it'll submit both hidden and the checkbox field *@
+                            <input name="TermsAndConditions" type="checkbox" value="true" id="termsAndConditions" /> I accept the <a href="#" title="termsConditions" alt="termsConditions">terms and conditions</a>
+                            <input type="hidden" value="false" name="TermsAndConditions" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <input type="submit" class="btn btn-danger btn-block center-block" id="bookListing" value="Book Now" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

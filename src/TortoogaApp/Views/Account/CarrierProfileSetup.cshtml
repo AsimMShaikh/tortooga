@@ -1,0 +1,234 @@
+@model TortoogaApp.ViewModels.AccountViewModels.CarrierProfileSetupViewModel
+
+@{
+    Layout = "_SiteLayout";
+
+}
+
+<!DOCTYPE html>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+    <script src="~/lib/smartwizard/js/jquery.smartWizard.js"></script>
+    <link href="~/lib/smartwizard/css/smart_wizard.css" rel="stylesheet" />
+    <link href="~/lib/smartwizard/css/smart_wizard_theme_arrows.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var btnFinish = $('<button></button>').text('Finish')
+                                            .addClass('btn btn-info')
+                                            .on('click', function () {
+                                                if (!$(this).hasClass('disabled')) {
+                                                    var elmForm = $("#myForm");
+                                                    if (elmForm) {
+                                                        elmForm.validator('validate');
+                                                        var elmErr = elmForm.find('.has-error');
+                                                        if (elmErr && elmErr.length > 0) {
+                                                            alert('Oops we still have error in the form');
+                                                            return false;
+                                                        } else {
+                                                            alert('Great! we are ready to submit form');
+                                                            elmForm.submit();
+                                                            return false;
+                                                        }
+                                                    }
+                                                }
+                                            });
+            var btnCancel = $('<button></button>').text('Cancel')
+                                             .addClass('btn btn-danger')
+                                             .on('click', function () {
+                                                 $('#smartwizard').smartWizard("reset");
+                                                 $('#myForm').find("input, textarea").val("");
+                                             });
+
+
+
+            // Smart Wizard
+            $('#smartwizard').smartWizard({
+                selected: 0,
+                theme: 'dots',
+                transitionEffect: 'fade',
+                toolbarSettings: {
+                    toolbarPosition: 'bottom',
+                    toolbarExtraButtons: [btnFinish, btnCancel]
+                },
+                anchorSettings: {
+                    markDoneStep: true, // add done css
+                    markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                    removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
+                    enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+                }
+            });
+
+            $("#smartwizard").on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
+                var elmForm = $("#form-step-" + stepNumber);
+                // stepDirection === 'forward' :- this condition allows to do the form validation
+                // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
+                if (stepDirection === 'forward' && elmForm) {
+                    elmForm.validator('validate');
+                    var elmErr = elmForm.children('.has-error');
+                    if (elmErr && elmErr.length > 0) {
+                        // Form validation failed
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            $("#smartwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
+                // Enable finish button only on last step
+                if (stepNumber == 3) {
+                    $('.btn-finish').removeClass('disabled');
+                } else {
+                    $('.btn-finish').addClass('disabled');
+                }
+            });
+
+        });
+
+    </script>
+}
+
+
+
+<div id="smartwizard">
+    <ul>
+        <li><a href="#step-1">Enter your credentials<br /><small></small></a></li>
+        <li><a href="#step-2">Company Info<br /><small></small></a></li>
+        <li><a href="#step-3">Banking Details<br /><small></small></a></li>
+    </ul>
+
+    <div>
+        <div id="step-1">
+            <div id="form-step-0" role="form" data-toggle="validator">
+                <div class="form-horizontal">
+                    <h4>Hello , Please provide folowing details before you start using Tortooga!</h4>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="Email" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OldPassword" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="OldPassword" class="form-control" />
+                            <span asp-validation-for="OldPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<form asp-action="FillCarrierDetails">
+                    <div class="form-horizontal">
+                        <h4>Hello , Please provide folowing details before you start using Tortooga!</h4>
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                    </div>
+                </form>*@
+        </div>
+        <div id="step-2">
+            <div id="form-step-1" role="form" data-toggle="validator">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label asp-for="CompanyBio" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <textarea rows="4" asp-for="CompanyBio" class="form-control"></textarea>
+                            <span asp-validation-for="CompanyBio" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SiteUrl" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="SiteUrl" class="form-control" />
+                            <span asp-validation-for="SiteUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddressLine1" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="AddressLine1" class="form-control" />
+                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddressLine2" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="AddressLine2" class="form-control" />
+                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostCode" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="PostCode" class="form-control" />
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="step-3">
+            <div id="form-step-2" role="form" data-toggle="validator">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label asp-for="AccountName" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="AccountName" class="form-control" />
+                            <span asp-validation-for="AccountName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IdentificationNumber" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="IdentificationNumber" class="form-control" />
+                            <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BankAccountNumber" class="col-md-2 control-label"></label>
+                        <div class="col-md-3">
+                            <input asp-for="BankAccountNumber" class="form-control" />
+                            <span asp-validation-for="BankAccountNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-3">
+                            <input type="submit" value="Login" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
